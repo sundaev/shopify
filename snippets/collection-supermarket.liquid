@@ -1,0 +1,31 @@
+<div class="collection-template collection-template-skin-1 collection-suppermarket">
+  {% section 'collection-header' %}
+  <div class="container">
+    <div class="halo-collection-content">
+      <div class="d-block d-xl-none">
+        {% render 'breadcrumb' %}
+      </div>
+      <div class="appendTo-toolbar">
+        <div class="container"></div>
+      </div>
+      <div class="row">
+        {% section 'sidebar-filter' %}
+        {% section 'collection-template-supermarket' %}
+      </div>
+      {% section 'brand-supermarket' %}
+    </div>   
+  </div>
+  <div class="has-border">
+    <div class="container">
+      {% if settings.style_product_grid == 'style_product_grid_2' %}
+        {% section 'recently-viewed-products-skin-1170' %}
+      {% elsif settings.style_product_grid == 'style_product_grid_3' %}
+        {% section 'recently-viewed-products-skin-fullwidth' %}
+      {% elsif settings.style_product_grid == 'style_product_grid_4' %}
+        {% section 'recently-viewed-products-skin-supermarket' %}
+      {% else %}
+        {% section 'recently-viewed-products' %}
+      {% endif %}
+    </div>
+  </div>
+</div>

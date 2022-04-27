@@ -1,0 +1,26 @@
+<div class="product-template product-template-supermarket">
+  <div class="container">
+    {% render 'breadcrumb' %}
+    <div class="halo-product-content">
+      <div class="row pro-page">
+        {% section 'sidebar-section' %}
+        {% section 'product-template-supermarket' %}
+        {% section 'product-recommendations' %}
+      </div>
+      
+      {% if settings.style_product_grid == 'style_product_grid_2' %}
+        {% section 'recently-viewed-products-skin-1170' %}
+      {% elsif settings.style_product_grid == 'style_product_grid_3' %}
+        {% section 'recently-viewed-products-skin-fullwidth' %}
+      {% elsif settings.style_product_grid == 'style_product_grid_4' %}
+        {% section 'recently-viewed-products-skin-supermarket' %}
+      {% else %}
+        {% section 'recently-viewed-products' %}
+      {% endif %}
+
+      {% section 'home-custom-block-baner' %}
+
+
+    </div>   
+  </div>
+</div>

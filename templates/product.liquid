@@ -1,0 +1,47 @@
+{% if settings.product_layout == "default" %} 
+	{% render 'product-default' %}
+{% elsif settings.product_layout == "grouped" %}
+	{% render 'product-grouped' %}
+{% elsif settings.product_layout == "slider" %}
+	{% render 'product-slider' %}
+{% elsif settings.product_layout == "gallery" %}
+	{% render 'product-gallery' %}
+{% elsif settings.product_layout == "full_with" %}
+	{% render 'product-full-width' %}
+{% elsif settings.product_layout == "skin_1" %}
+	{% render 'product-skin-1' %}
+{% elsif settings.product_layout == "supermarket" %}
+	{% render 'product-supermarket' %}
+{% endif %}
+
+{% if template contains 'product' %}
+<div class="footbar-fixed footbar-fixed-product">
+    {% section 'someone-purchased' %}
+    {% section 'GDPR-modal' %}
+
+    {% if settings.display_sticky %} 
+        {% render 'sticky-add-to-cart' with product as product %}
+    {% endif %}
+</div>
+{% endif %}
+{% section 'alireviews-widget-88822' %}
+
+{% if product.metafields.loox.num_reviews %}
+<script id="looxSchemaJson" type="application/ld+json">
+{
+	"@context": "http://schema.org",
+	"@type": "Product",
+	"@id": {{ canonical_url | json }},
+	"aggregateRating": {
+		"@type": "AggregateRating",
+		"ratingValue": "{{ product.metafields.loox.avg_rating }}",
+		"reviewCount": "{{ product.metafields.loox.num_reviews }}"
+	},
+	"name": {{ product.title | json }}
+}
+</script>
+{% endif %}
+
+
+	<div id="looxReviews" data-product-id="{{product.id}}" class="loox-reviews-default">{{ product.metafields.loox.reviews }}</div>
+{% render 'judgeme_widgets', widget_type: 'judgeme_review_widget', concierge_install: true, auto_install: true, product: product %}
