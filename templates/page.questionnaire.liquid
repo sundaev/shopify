@@ -1,0 +1,58 @@
+<iframe title="question-link" style='width:100%;height:99vh' id="question-link" sandbox="allow-same-origin allow-scripts"></iframe>
+<a href="{{ routes.account_login_url }}"><span id="auto_login"></span></a>
+<a href="{{ routes.root_url }}"><span id="auto_home"></span></a>
+<script>
+    var query = window.location.href;
+    var receiver = document.getElementById("question-link");
+    window.onload = function () {
+        let id = "{{customer.id}}";
+        if (!id) {
+            document.getElementById("auto_login").click();
+        } else {
+            let id = query.split("?id=");
+            if (id?.length > 1) {
+                receiver.src = `https://apibeta.somyfo.com/customers?com=survey&t=surveyTemplate&id=${id[1]}&debug=1&refresh=1app_site_name=somyfo-com`;
+                let hidden1 = document.getElementById("shopify-section-announcement");
+                let hidden2 = document.getElementById("shopify-section-header");
+                let hidden3 = document.getElementById("shopify-section-footer");
+                let hidden4 = document.getElementById("admin-bar-iframe");
+                let hidden = [hidden1, hidden2, hidden3, hidden4];
+                hidden.forEach((item) => {
+                    if (item) {
+                        item.style.display = "none";
+                    }
+                });
+            } else {
+                console.log("问卷不存在");
+            }
+        }
+    };
+
+    window.addEventListener("message", (e) => {
+        if (e.data && e.data.type == "onLoadCallBack" && e.data.site == "shopify") {
+            receiver.contentWindow.postMessage(
+                "{{customer.id}},{{customer.email }}",
+                "https://apibeta.somyfo.com",
+                "somyfo-com"
+            )
+            console.log("load");
+        }
+        if (e.data && e.data.type == "submitSucess" && e.data.site == "shopify") {
+            let home = document.getElementById("auto_home")
+            setTimeout(()=>{
+                home.click();
+            },5000)
+
+            let hidden1 = document.getElementById("shopify-section-announcement");
+            let hidden2 = document.getElementById("shopify-section-header");
+            let hidden3 = document.getElementById("shopify-section-footer");
+            let hidden4 = document.getElementById("admin-bar-iframe");
+            let hidden = [hidden1, hidden2, hidden3, hidden4];
+            hidden.forEach((item) => {
+                if (item) {
+                    item.style.display = "";
+                }
+            });
+        }
+    });
+</script>
