@@ -11,7 +11,7 @@
         } else {
             let id = query.split("?id=");
             if (id?.length > 1) {
-                receiver.src = `https://apibeta.somyfo.com/customers?com=survey&t=surveyTemplate&id=${id[1]}&debug=1&refresh=1app_site_name=somyfo-com`;
+                receiver.src = `https://apibeta.somyfo.com/customers?com=survey&t=surveyTemplate&id=${id[1]}&debug=1&refresh=1&app_site_name=somyfo-com`;
                 let hidden1 = document.getElementById("shopify-section-announcement");
                 let hidden2 = document.getElementById("shopify-section-header");
                 let hidden3 = document.getElementById("shopify-section-footer");
@@ -31,9 +31,8 @@
     window.addEventListener("message", (e) => {
         if (e.data && e.data.type == "onLoadCallBack" && e.data.site == "shopify") {
             receiver.contentWindow.postMessage(
-                "{{customer.id}},{{customer.email }}",
-                "https://apibeta.somyfo.com",
-                "somyfo-com"
+                "{{customer.id}},{{customer.email }},'somyfo-com'",
+                "https://apibeta.somyfo.com"
             )
             console.log("load");
         }
